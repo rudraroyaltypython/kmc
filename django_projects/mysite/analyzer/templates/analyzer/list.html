@@ -1,0 +1,95 @@
+<!-- templates/analyzer/list.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Analysis</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .vertical-digits {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.2;
+            font-weight: 600;
+        }
+
+        .mid-value {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        table td,
+        table th {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Daily Analysis Records</h2>
+        <div class="mb-4 text-center">
+            <a href="/" class="btn btn-primary me-2">Daily Analysis</a>
+            <a href="/probability/" class="btn btn-success">Probability Table (00–99)</a>
+        </div>
+
+
+        {% if records %}
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Open</th>
+                    <th>Mid</th>
+                    <th>Close</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.day }}</td>
+
+                    <!-- OPEN VALUE (3 vertical digits) -->
+                    <td>
+                        <div class="vertical-digits">
+                            {% for d in record.open_digits %}
+                            <span>{{ d }}</span>
+                            {% endfor %}
+                        </div>
+                    </td>
+
+                    <!-- MID VALUE (center) -->
+                    <td class="mid-value">
+                        {{ record.mid_value }}
+                    </td>
+
+                    <!-- CLOSE VALUE (3 vertical digits) -->
+                    <td>
+                        <div class="vertical-digits">
+                            {% for d in record.close_digits %}
+                            <span>{{ d }}</span>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+        {% else %}
+        <p class="text-muted text-center">No records found.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
